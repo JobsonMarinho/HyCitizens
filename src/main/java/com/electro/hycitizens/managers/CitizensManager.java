@@ -416,7 +416,7 @@ public class CitizensManager {
         citizenData.setHideNametag(config.getBoolean(basePath + ".hide-nametag", false));
         citizenData.setHideNpc(config.getBoolean(basePath + ".hide-npc", false));
         citizenData.setNametagOffset(config.getFloat(basePath + ".nametag-offset", 0));
-        citizenData.setFKeyInteractionEnabled(config.getBoolean(basePath + ".f-key-interaction", false));
+        citizenData.setFKeyInteractionEnabled(config.getBoolean(basePath + ".f-key-interaction", true));
 
         // Load animation behaviors
         List<AnimationBehavior> animBehaviors = new ArrayList<>();

@@ -113,7 +113,7 @@ public class CitizenData {
         this.nametagOffset = 0;
         this.hideNametag = false;
 
-        this.fKeyInteractionEnabled = false;
+        this.fKeyInteractionEnabled = true;
     }
 
     @Nonnull
