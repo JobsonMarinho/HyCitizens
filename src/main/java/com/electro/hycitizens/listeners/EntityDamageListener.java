@@ -68,8 +68,7 @@ public class EntityDamageListener extends DamageEventSystem {
         if (source instanceof Damage.ProjectileSource projectileSource) { // This doesn't work for arrows. Using a workaround
             Ref<EntityStore> shooterRef = projectileSource.getRef();
             attackerPlayerRef = store.getComponent(shooterRef, PlayerRef.getComponentType());
-        }
-        else if (source instanceof Damage.EntitySource entitySource) {
+        } else if (source instanceof Damage.EntitySource entitySource) {
             Ref<EntityStore> attackerRef = entitySource.getRef();
             attackerPlayerRef = store.getComponent(attackerRef, PlayerRef.getComponentType());
         }
@@ -87,7 +86,7 @@ public class EntityDamageListener extends DamageEventSystem {
                 continue;
 
             // Passive citizens always cancel damage - they never enter combat
-          //  boolean cancelDamage = !citizen.isTakesDamage() || "PASSIVE".equals(citizen.getAttitude());
+            boolean cancelDamage = !citizen.isTakesDamage() || "PASSIVE".equals(citizen.getAttitude());
 
             // Trigger ON_ATTACK animations regardless of damage setting
             HyCitizensPlugin.get().getCitizensManager().triggerAnimations(citizen, "ON_ATTACK");
@@ -96,75 +95,46 @@ public class EntityDamageListener extends DamageEventSystem {
 
             //The invulnerable component is added don't need that
 
-            /*
+
             if (cancelDamage) {
                 event.setCancelled(true);
                 event.setAmount(0);
-                World world = Universe.get().getWorld(citizen.getWorldUUID());
-                // Todo: This does not work
-//                if (world != null) {
-//                    // Prevent knockback
-//                    world.execute(() -> {
-//                        store.removeComponentIfExists(targetRef, KnockbackComponent.getComponentType());
-//                    });
-//                }
-                // Temporary solution to knockback
-                TransformComponent transformComponent = store.getComponent(targetRef, TransformComponent.getComponentType());
-                if (transformComponent != null && world != null) {
-                    Vector3d lockedPosition = new Vector3d(transformComponent.getPosition());
-
-                    ScheduledFuture<?> lockTask = HytaleServer.SCHEDULED_EXECUTOR.scheduleAtFixedRate(() -> {
-                        if (!targetRef.isValid()) {
-                            return;
-                        }
-
-                        Vector3d currentPosition = transformComponent.getPosition();
-                        if (!currentPosition.equals(lockedPosition)) {
-                            transformComponent.setPosition(lockedPosition);
-                        }
-                    }, 0, 20, TimeUnit.MILLISECONDS);
-
-                    HytaleServer.SCHEDULED_EXECUTOR.schedule(() -> {
-                        lockTask.cancel(false);
-                    }, 2000, TimeUnit.MILLISECONDS);
-                }
+                break;
             }
-             */
-            if (store.getComponent(targetRef, Invulnerable.getComponentType()) != null) {
-                // Check if the citizen will die from this damage
-                EntityStatMap statMap = store.getComponent(targetRef, EntityStatsModule.get().getEntityStatMapComponentType());
-                if (statMap == null) {
-                    return;
-                }
 
-                float currentHealth = statMap.get(DefaultEntityStatTypes.getHealth()).get();
-                float damageAmount = event.getAmount();
+            // Check if the citizen will die from this damage
+            EntityStatMap statMap = store.getComponent(targetRef, EntityStatsModule.get().getEntityStatMapComponentType());
+            if (statMap == null) {
+                return;
+            }
 
-                if (currentHealth - damageAmount <= 0) {
-                    long now = System.currentTimeMillis();
+            float currentHealth = statMap.get(DefaultEntityStatTypes.getHealth()).get();
+            float damageAmount = event.getAmount();
 
-                    if (!citizen.isAwaitingRespawn()) {
-                        citizen.setLastDeathTime(now);
+            if (currentHealth - damageAmount <= 0) {
+                long now = System.currentTimeMillis();
 
-                        // Despawn nametag
-                        plugin.getCitizensManager().despawnCitizenHologram(citizen);
+                if (!citizen.isAwaitingRespawn()) {
+                    citizen.setLastDeathTime(now);
 
-                        citizen.setSpawnedUUID(null);
-                        citizen.setNpcRef(null);
+                    // Despawn nametag
+                    plugin.getCitizensManager().despawnCitizenHologram(citizen);
 
-                        // Mark for respawn
-                        if (citizen.isRespawnOnDeath()) {
-                            citizen.setAwaitingRespawn(true);
+                    citizen.setSpawnedUUID(null);
+                    citizen.setNpcRef(null);
 
-                            HytaleServer.SCHEDULED_EXECUTOR.schedule(() -> {
-                                World world = Universe.get().getWorld(citizen.getWorldUUID());
-                                if (world == null)
-                                    return;
+                    // Mark for respawn
+                    if (citizen.isRespawnOnDeath()) {
+                        citizen.setAwaitingRespawn(true);
 
-                                citizen.setAwaitingRespawn(false);
-                                world.execute(() -> plugin.getCitizensManager().spawnCitizen(citizen, true));
-                            }, (long)(citizen.getRespawnDelaySeconds() * 1000), TimeUnit.MILLISECONDS);
-                        }
+                        HytaleServer.SCHEDULED_EXECUTOR.schedule(() -> {
+                            World world = Universe.get().getWorld(citizen.getWorldUUID());
+                            if (world == null)
+                                return;
+
+                            citizen.setAwaitingRespawn(false);
+                            world.execute(() -> plugin.getCitizensManager().spawnCitizen(citizen, true));
+                        }, (long) (citizen.getRespawnDelaySeconds() * 1000), TimeUnit.MILLISECONDS);
                     }
                 }
             }

@@ -4,6 +4,7 @@ import com.electro.hycitizens.actions.NpcInteractAction;
 import com.electro.hycitizens.commands.CitizensCommand;
 import com.electro.hycitizens.listeners.*;
 import com.electro.hycitizens.managers.CitizensManager;
+import com.electro.hycitizens.systems.NpcKnockbackRemoverSystem;
 import com.electro.hycitizens.ui.CitizensUI;
 import com.electro.hycitizens.util.ConfigManager;
 import com.electro.hycitizens.util.UpdateChecker;
@@ -47,7 +48,7 @@ public class HyCitizensPlugin extends JavaPlugin {
         this.chunkPreLoadListener = new ChunkPreLoadListener(this);
         this.connectionListener = new PlayerConnectionListener(this);
 
-        getEntityStoreRegistry().registerSystem(new KnockbackSystems.ApplyKnockback());
+        getEntityStoreRegistry().registerSystem(new NpcKnockbackRemoverSystem());
         this.getCodecRegistry(Interaction.CODEC).register("CitizenInteraction", NpcInteractAction.class, NpcInteractAction.CODEC);
         // Register event listeners
         registerEventListeners();

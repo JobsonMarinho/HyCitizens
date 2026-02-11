@@ -814,9 +814,9 @@ public class CitizensManager {
         Ref<EntityStore> ref = npc.second().getReference();
         Store<EntityStore> store = npc.first().getStore();
 
-        if (!citizen.isTakesDamage()) {
-            store.addComponent(ref, Invulnerable.getComponentType());
-        }
+//        if (!citizen.isTakesDamage()) {
+//            store.addComponent(ref, Invulnerable.getComponentType());
+//        }
 
         setInteractionComponent(store, ref, citizen);
 
@@ -901,9 +901,9 @@ public class CitizensManager {
         Store<EntityStore> npcStore = npc.first().getStore();
         Ref<EntityStore> npcRef = npc.second().getReference();
 
-        if (!citizen.isTakesDamage()) {
-            npcStore.addComponent(npcRef, Invulnerable.getComponentType());
-        }
+//        if (!citizen.isTakesDamage()) {
+//            npcStore.addComponent(npcRef, Invulnerable.getComponentType());
+//        }
 
 
         // Apply skin component
