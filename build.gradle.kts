@@ -7,11 +7,13 @@ version = "1.4.1"
 
 repositories {
     mavenCentral()
+    maven("https://maven.hytale.com/release/")
+    maven("https://www.cursemaven.com")
 }
 
 dependencies {
-    compileOnly(files("../../Server/HytaleServer.jar"))
-    implementation(files("libs/HyUI-0.5.11-all.jar"))
+    compileOnly("com.hypixel.hytale:Server:latest.release")
+    implementation("urse.maven:hyui-1431415:7622384")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
