@@ -5,14 +5,11 @@ import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
-import com.hypixel.hytale.logger.HytaleLogger;
 import com.hypixel.hytale.server.core.entity.knockback.KnockbackComponent;
 import com.hypixel.hytale.server.core.entity.knockback.KnockbackSystems;
 import com.hypixel.hytale.server.core.modules.physics.component.Velocity;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import org.checkerframework.checker.nullness.compatqual.NonNullDecl;
-
-import java.util.logging.Level;
 
 public class NpcKnockbackRemoverSystem extends KnockbackSystems.ApplyKnockback {
 
