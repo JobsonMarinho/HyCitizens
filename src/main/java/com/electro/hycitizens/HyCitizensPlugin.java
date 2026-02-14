@@ -2,15 +2,17 @@ package com.electro.hycitizens;
 
 import com.electro.hycitizens.actions.NpcInteractAction;
 import com.electro.hycitizens.commands.CitizensCommand;
-import com.electro.hycitizens.listeners.*;
+import com.electro.hycitizens.listeners.ChunkPreLoadListener;
+import com.electro.hycitizens.listeners.EntityDamageListener;
+import com.electro.hycitizens.listeners.PlayerConnectionListener;
 import com.electro.hycitizens.managers.CitizensManager;
 import com.electro.hycitizens.systems.NpcKnockbackRemoverSystem;
 import com.electro.hycitizens.ui.CitizensUI;
 import com.electro.hycitizens.util.ConfigManager;
 import com.electro.hycitizens.util.UpdateChecker;
 import com.hypixel.hytale.event.EventPriority;
-import com.hypixel.hytale.server.core.entity.knockback.KnockbackSystems;
-import com.hypixel.hytale.server.core.event.events.player.*;
+import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
+import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
@@ -20,6 +22,7 @@ import javax.annotation.Nonnull;
 import java.nio.file.Paths;
 
 public class HyCitizensPlugin extends JavaPlugin {
+
     private static HyCitizensPlugin instance;
     private ConfigManager configManager;
     private CitizensManager citizensManager;
@@ -48,14 +51,10 @@ public class HyCitizensPlugin extends JavaPlugin {
         this.chunkPreLoadListener = new ChunkPreLoadListener(this);
         this.connectionListener = new PlayerConnectionListener(this);
 
-        getEntityStoreRegistry().registerSystem(new NpcKnockbackRemoverSystem());
         this.getCodecRegistry(Interaction.CODEC).register("CitizenInteraction", NpcInteractAction.class, NpcInteractAction.CODEC);
         // Register event listeners
         registerEventListeners();
     }
-
-
-
 
     @Override
     protected void start() {
@@ -73,8 +72,8 @@ public class HyCitizensPlugin extends JavaPlugin {
         getEventRegistry().register(PlayerDisconnectEvent.class, connectionListener::onPlayerDisconnect);
         getEventRegistry().register(PlayerConnectEvent.class, connectionListener::onPlayerConnect);
 
-        this.getEntityStoreRegistry().registerSystem(new EntityDamageListener(this));
-        //getEventRegistry().registerGlobal(AddPlayerToWorldEvent.class, addToWorldListener::onAddPlayerToWorld);
+        getEntityStoreRegistry().registerSystem(new EntityDamageListener(this));
+        getEntityStoreRegistry().registerSystem(new NpcKnockbackRemoverSystem());
         getEventRegistry().registerGlobal(EventPriority.LAST, ChunkPreLoadProcessEvent.class, chunkPreLoadListener::onChunkPreload);
     }
 

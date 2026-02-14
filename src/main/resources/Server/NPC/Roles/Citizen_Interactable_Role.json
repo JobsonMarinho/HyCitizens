@@ -6,7 +6,9 @@
     }
   ],
   "Appearance": "Player",
-  "MaxHealth": { "Compute": "MaxHealth" },
+  "MaxHealth": {
+    "Compute": "MaxHealth"
+  },
   "Parameters": {
     "MaxHealth": {
       "Value": 100,
@@ -14,30 +16,30 @@
     }
   },
   "InteractionInstruction": {
-      "Instructions": [
-        {
-          "Continue": true,
-          "Sensor": {
-            "Type": "Any"
-          },
-          "Actions": [
-            {
-              "Type": "SetInteractable",
-              "Interactable": true
-            }
-          ]
+    "Instructions": [
+      {
+        "Continue": true,
+        "Sensor": {
+          "Type": "Any"
         },
-        {
-          "Sensor": {
-            "Type": "HasInteracted"
-          },
-          "Actions": [
-            {
-              "Type": "CitizenInteraction"
-            }
-          ]
-        }
-      ]
-    },
-    "NameTranslationKey": "Citizen"
+        "Actions": [
+          {
+            "Type": "SetInteractable",
+            "Interactable": true
+          }
+        ]
+      },
+      {
+        "Sensor": {
+          "Type": "HasInteracted"
+        },
+        "Actions": [
+          {
+            "Type": "CitizenInteraction"
+          }
+        ]
+      }
+    ]
+  },
+  "NameTranslationKey": "Citizen"
 }

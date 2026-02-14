@@ -6,7 +6,9 @@
     }
   ],
   "Appearance": "Player",
-  "MaxHealth": { "Compute": "MaxHealth" },
+  "MaxHealth": {
+    "Compute": "MaxHealth"
+  },
   "Parameters": {
     "MaxHealth": {
       "Value": 100,
