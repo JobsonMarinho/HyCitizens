@@ -12,6 +12,7 @@
   "Website": "https://github.com/ElectroGamesDev",
   "Main": "com.electro.hycitizens.HyCitizensPlugin",
   "IncludesAssetPack": true,
+  "ServerVersion": "2026.02.19-1a311a592",
   "Dependencies": {
     "Hytale:DamageModule": "*",
     "Hytale:EntityModule": "*",

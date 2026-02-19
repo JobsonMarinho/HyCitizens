@@ -12,7 +12,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("com.hypixel.hytale:Server:latest.release")
+    compileOnly("com.hypixel.hytale:Server:2026.02.19-1a311a592")
     implementation("curse.maven:hyui-1431415:7622384")
 
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
