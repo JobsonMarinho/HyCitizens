@@ -1344,9 +1344,7 @@ public class CitizensManager {
             transform.bodyOrientation = bodyDirection;
 
             // Create ComponentUpdate
-            ComponentUpdate update = new ComponentUpdate();
-            update.type = ComponentUpdateType.Transform;
-            update.transform = transform;
+            TransformUpdate update = new TransformUpdate(transform);
 
             // Create EntityUpdate
             EntityUpdate entityUpdate = new EntityUpdate(
