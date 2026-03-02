@@ -6,6 +6,7 @@ import com.electro.hycitizens.interactions.PlayerInteractionHandler;
 import com.electro.hycitizens.listeners.ChunkPreLoadListener;
 import com.electro.hycitizens.listeners.EntityDamageListener;
 import com.electro.hycitizens.listeners.PlayerConnectionListener;
+import com.electro.hycitizens.systems.NpcKnockbackRemoverSystem;
 import com.electro.hycitizens.listeners.PlayerItemInteractionHandler;
 import com.electro.hycitizens.managers.CitizensManager;
 import com.electro.hycitizens.models.CitizenData;
@@ -109,6 +110,7 @@ public class HyCitizensPlugin extends JavaPlugin {
         getEventRegistry().register(PlayerConnectEvent.class, connectionListener::onPlayerConnect);
 
         this.getEntityStoreRegistry().registerSystem(new EntityDamageListener(this));
+        this.getEntityStoreRegistry().registerSystem(new NpcKnockbackRemoverSystem());
         getEventRegistry().registerGlobal(EventPriority.LAST, ChunkPreLoadProcessEvent.class, chunkPreLoadListener::onChunkPreload);
     }
 
